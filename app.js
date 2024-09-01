@@ -1,6 +1,5 @@
 import express from "express";
 import { config } from "dotenv";
-import cors from "cors";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import { dbConnection } from "./database/dbConnection.js";
@@ -24,13 +23,13 @@ app.use((req, res, next) => {
 });
 
 // CORS configuration
-app.use(
-  cors({
-    origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // Corrected option name
-  })
-);
+// app.use(
+//   cors({
+//     origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true, // Corrected option name
+//   })
+// );
 
 app.use(cookieParser());
 app.use(express.json());
