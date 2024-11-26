@@ -23,14 +23,14 @@ app.use((req, res, next) => {
 });
 
 // CORS configuration
-// app.use(
-//   cors({
-//     origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: true, // Corrected option name
-//   })
-// );
-
+app.use(
+  cors({
+    origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // Corrected option name
+  })
+);
+app.options('*', cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
