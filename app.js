@@ -24,14 +24,22 @@ app.use((req, res, next) => {
 });
 
 // CORS configuration
+const allowedOrigins = [process.env.FRONTEND_URL, process.env.DASHBOARD_URL];
+
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
+    origin: (origin, callback) => {
+      // Allow requests from the specified origins or if no origin (e.g., when testing locally)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // Corrected option name
+    credentials: true, // Allow credentials (cookies, etc.)
   })
 );
-app.options('*', cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
