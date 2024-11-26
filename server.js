@@ -8,13 +8,6 @@ cloudinary.v2.config({
     api_secret:process.env.CLOUDINARY_API_SECRET,
 });
 
-app.use(
-    cors({
-      origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
-      methods: ["GET", "POST", "PUT", "DELETE"],
-      credentials: true, // Corrected option name
-    })
-  );
 app.listen(process.env.PORT, () => {
     console.log(`server listening on port  ${process.env.PORT}`);
 
