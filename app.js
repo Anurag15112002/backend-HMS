@@ -25,11 +25,22 @@ app.use((req, res, next) => {
 
 // CORS configuration
 
+const allowedOrigins = [process.env.FRONTEND_URL, process.env.DASHBOARD_URL];
+
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL_ONE, process.env.FRONTEND_URL_TWO],
-    method: ["GET", "POST", "DELETE", "PUT"],
-    credentials: true,
+    origin: (origin, callback) => {
+      // If origin is not provided (like when testing locally), allow it
+      if (!origin || allowedOrigins.includes(origin)) {
+        console.log(`CORS: Allowing request from ${origin}`); // For debugging purposes
+        callback(null, true);
+      } else {
+        console.error(`CORS: Blocked request from ${origin}`); // For debugging purposes
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // Allow cookies and credentials
   })
 );
 app.use(cookieParser());
