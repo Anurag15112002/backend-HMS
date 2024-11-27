@@ -28,16 +28,9 @@ const allowedOrigins = [process.env.FRONTEND_URL, process.env.DASHBOARD_URL];
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow requests from the specified origins or if no origin (e.g., when testing locally)
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // Allow credentials (cookies, etc.)
+    origin: [process.env.FRONTEND_URL_ONE, process.env.FRONTEND_URL_TWO],
+    method: ["GET", "POST", "DELETE", "PUT"],
+    credentials: true,
   })
 );
 app.use(cookieParser());
